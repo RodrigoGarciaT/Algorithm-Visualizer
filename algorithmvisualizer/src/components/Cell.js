@@ -7,7 +7,7 @@ function Cell({row, column, className, ...props}) {
     const { board, updateCell, buttonState} = React.useContext(boardContext)
     let symbol = null
     const iconStyle = {
-      fontSize: "5000%",
+      fontSize: "200%",
       /*color: "#0056b3",*/
     };
     if (board[row][column].target) {
@@ -23,16 +23,20 @@ function Cell({row, column, className, ...props}) {
       }
       
     if (board[row][column].weight) { 
-        className += " weight"
-         // symbol = <BiDumbbell style={iconStyle} />;
+         // className += " weight"
+         symbol = <BiDumbbell style={iconStyle} />;
       }
-    
+      if (board[row][column].visited) { 
+        className += " visited"
+      }
+
+      if (board[row][column].isPath) { 
+        className = "grid-item" + " isPath"
+      }
     return (
             <div 
             onClick = {(event) => (buttonState.first || buttonState.second)? updateCell(row, column, event):null} 
             onMouseEnter = {(event) => (buttonState.third || buttonState.fourth)? updateCell(row, column, event): null}
-            /*onClick = {(event) =>  updateCell(row, column, event)} 
-            onMouseEnter = {(event) => updateCell(row, column, event)}*/
             className={className} {...props}>{symbol}
             </div>
         )

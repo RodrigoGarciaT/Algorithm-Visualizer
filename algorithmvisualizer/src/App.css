@@ -67,9 +67,80 @@
 }
 
 .border{
-  background-color: #0056b3;
+  /*background-color: #0056b3;*/
+  background-color: #00008B;
 }
 
 .weight{
   background-color: red;
+  content: W
+}
+
+.visited {
+  animation-name: visitedAnimation;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+.visited {
+  animation-name: visitedAnimation;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes visitedAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgba(255, 165, 0, 0.75); /* Start with orange color */
+    border-radius: 100%;
+  }
+
+  50% {
+    transform: scale(1);
+    background-color: rgba(255, 113, 0, 0.75); /* Transition to a shade of orange */
+  }
+
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(255, 45, 0, 0.75); /* Transition to a darker shade of red */
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(255, 0, 0, 0.75); /* Stay at red color */
+  }
+}
+
+.isPath{
+  animation-name: isPathAnimation;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes isPathAnimation {
+  0% {
+    transform: scale(0.3);
+    background-color: rgba(255, 255, 0, 0.75); /* Start with a light yellow */
+  }
+
+  50% {
+    transform: scale(1);
+    background-color: rgba(255, 204, 0, 0.75); /* Transition to a medium yellow */
+  }
+
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(255, 153, 0, 0.75); /* Transition to a vibrant yellow */
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: rgba(255, 204, 0, 0.75); /* End with the medium yellow */
+  }
 }

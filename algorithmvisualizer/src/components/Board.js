@@ -1,19 +1,10 @@
 import Cell from './Cell'
 import React, { useState, useEffect } from "react";
 import { appContext } from "../App";
-/*import { click } from '@testing-library/user-event/dist/click';*/
 const boardContext = React.createContext()
 export { boardContext }
-function Board() {
-    const { buttonState, toggleButton } = React.useContext(appContext)
-    const numRows = 25;
-    const numCols = 40;
-    
-    const defaultCell = { border: false, start: false, target: false, weight: false };
-    const initialBoardState = Array.from({ length: numRows }, () =>
-    Array.from({ length: numCols }, () => ({ ...defaultCell }))
-  );
-  const [board, setBoard] = useState(initialBoardState)
+function Board({rendererKey}) {
+    const { buttonState, toggleButton, board, setBoard, setRerenderKey } = React.useContext(appContext)
   const [clicked, setClicked] = useState(false);
   const handleMouseDown = (event) => {
     event.stopPropagation();
@@ -27,7 +18,6 @@ function Board() {
     function updateCell(row, column, event){
         event.stopPropagation()
         if(!clicked && (buttonState.third || buttonState.fourth))return
-        //console.log(clicked)
         setBoard(previousBoard =>{
             let updatedBoard = [...previousBoard]
             if (buttonState.first|| buttonState.second) {
@@ -47,6 +37,9 @@ function Board() {
               updatedBoard[row][column].weight = !updatedBoard[row][column].weight 
             }
             console.log(updatedBoard[row][column].border, ' ', clicked, ' ', row, ' ', column)
+            setRerenderKey(prevKey =>{
+              return prevKey + 1
+            })
             return updatedBoard;
         });}
 
@@ -57,6 +50,7 @@ function Board() {
                 {board.map((row, rowIndex) =>
                 row.map((cell, columnIndex) => (
                 <Cell
+                    rendererKey = {rendererKey}
                     row = {rowIndex}
                     column = {columnIndex}
                     className ="grid-item"
