@@ -7,10 +7,6 @@ export default function useToggle({
             /*{first, second, third, fourth}*/
     function toggle (buttonToTurnOn) {
         setState((prevState) =>{
-           /* return {
-                ...prevState,
-                [buttonToTurnOn]: prevState[buttonToTurnOn] === 1 ? 0 : 1
-            };*/
             console.log("changing button state to ", buttonToTurnOn)
             if(buttonToTurnOn === 1)return {first: 1, second: 0, third: 0 ,fourth: 0};
             if(buttonToTurnOn === 2)return {first: 0, second: 1, third: 0 ,fourth: 0};

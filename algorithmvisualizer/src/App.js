@@ -4,6 +4,7 @@ import Board from './components/Board'
 import React, { useState, useEffect } from "react";
 import useToggle from "./hooks/useToggle";
 import bfs from "./algorithms/bfs"
+import dijkstra from "./algorithms/Dijkstra"
 const appContext = React.createContext()
 export { appContext }
 function App() {
@@ -20,12 +21,13 @@ const defaultCell = { border: false, start: false, target: false, weight: false,
 const initialBoardState = Array.from({ length: numRows }, () =>
 Array.from({ length: numCols }, () => ({ ...defaultCell }))
 );
+
+initialBoardState[5][10].start = true;
+initialBoardState[10][20].target = true;
 const [board, setBoard] = useState(initialBoardState)
-
-
-// solving the board
-
-function solveBfs(){
+const[isSolved, setIsSolved] = useState(false)
+// solving the board with Bfs or dijkstra
+function solveAlgorithm(algorithm){
   let startRow, endRow
   let startColumn, endColumn
 
@@ -42,16 +44,17 @@ function solveBfs(){
       }
     }
   }
-  const {visitedArray, path} = bfs(startRow,  startColumn, endRow, endColumn, board)
+  const {visitedArray, path} = algorithm == "bfs"? bfs(startRow,  startColumn, endRow, endColumn, board)
+  : dijkstra(startRow,  startColumn, endRow, endColumn, board)
   animateAlgorithm(visitedArray, path)
 }
-
 
 const [rerenderKey, setRerenderKey] = useState(0);
 
 function animateAlgorithm(visitedArray, path){
   // update algo nodes
   for(let i = 0; i< visitedArray.length + path.length; i++){
+    //if(!isSolving)return
     setTimeout(()=>{
     let cell, newCell
     if(i < visitedArray.length){
@@ -75,8 +78,31 @@ function animateAlgorithm(visitedArray, path){
 
 useEffect(() => {
 }, [board])
+
+
+function resetBoard(){
+  setBoard(()=>{
+    return initialBoardState
+  })
+}
+
+function resetSolution(){
+  setBoard(prevBoard=>{
+    for(let i = 0; i < 25; i++){
+      for(let j = 0; j < 40; j++){
+        prevBoard[i][j] = {...prevBoard[i][j], isPath: false, visited: false}
+      }
+    }
+    setRerenderKey(prevKey =>{
+      return prevKey + 1
+    })
+    return prevBoard
+  })
+}
+
+
   return (
-    <appContext.Provider value = {{buttonState, toggleButton, board, setBoard, solveBfs, setRerenderKey}}>
+    <appContext.Provider value = {{buttonState, toggleButton, board, setBoard, solveAlgorithm, resetBoard, resetSolution, setRerenderKey}}>
       <div>
         <Navbar/>
         <Board rerenderKey/>
