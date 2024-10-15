@@ -12,7 +12,7 @@ function Navbar() {
         <div className="nav-right">
             <button onClick ={() => resetBoard()}className="nav-button">Reset Board</button>
             <button onClick ={() => resetSolution()}className="nav-button">Reset Solution</button>
-            <button onClick = {() => solveAlgorithm(currentAlgorithm)} className = "nav-button solver">{"Visualize " + currentAlgorithm + "!"}</button>
+            <button onClick = {() => solveAlgorithm(currentAlgorithm)} className = "nav-button solver">{"Visualize " + currentAlgorithm + "!!"}</button>
             <div className ="dropdown">
               <button className ="dropbtn">Algorithm
               <FaCaretDown />
